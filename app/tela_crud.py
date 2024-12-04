@@ -49,6 +49,9 @@ def abrir_janela_exibir_produtos():
         exibir_produtos(tree, filtro)
 
     Button(janela_exibir, text="Buscar", command=realizar_busca).pack(pady=5)
+    Button(janela_exibir, text="Adicionar Produto", command=adicionar_produto).pack(pady=5)
+    Button(janela_exibir, text="Editar Produto", command=editar_produto).pack(pady=10)
+    Button(janela_exibir, text="Excluir Produto", command=excluir_produto).pack(pady=15)
 
     frame_tabela = ttk.Frame(janela_exibir)
     frame_tabela.pack(expand=True, fill="both")
@@ -119,7 +122,7 @@ def adicionar_produto():
     # Criando a janela de adicionar produto
     janela_adicionar_produto = Tk()
     janela_adicionar_produto.title("Adicionar Produto")
-    janela_adicionar_produto.geometry("400x300")
+    janela_adicionar_produto.geometry("400x500")
 
     Label(janela_adicionar_produto, text="Nome do Produto:").pack(pady=5)
     entry_nome = Entry(janela_adicionar_produto)
@@ -177,7 +180,7 @@ def editar_produto():
     # Criando a janela de edição de produto
     janela_editar_produto = Tk()
     janela_editar_produto.title("Editar Produto")
-    janela_editar_produto.geometry("400x300")
+    janela_editar_produto.geometry("400x500")
 
     Label(janela_editar_produto, text="ID do Produto:").pack(pady=5)
     entry_id = Entry(janela_editar_produto)
@@ -239,16 +242,33 @@ def excluir_produto():
 
     Button(janela_excluir_produto, text="Excluir Produto", command=confirmar_exclusao).pack(pady=10)
 
-# Função para abrir a tela CRUD
-def abrir_janela_crud():
-    janela_crud = Toplevel()
-    janela_crud.title("CRUD de Produtos")
-    janela_crud.geometry("600x400")
+# Função para exibir o "Sobre Nós"
+def exibir_sobre_nos():
+    janela_sobre_nos = Toplevel()
+    janela_sobre_nos.title("Sobre Nós - Drogaria Senai")
+    janela_sobre_nos.geometry("600x400")
 
-    Label(janela_crud, text="CRUD de Produtos").pack(pady=10)
+    texto_sobre_nos = """
+    A Drogaria Senai é uma farmácia comprometida com a saúde e bem-estar de seus clientes.
+    Com uma trajetória de excelência no atendimento, oferecemos uma ampla gama de medicamentos,
+    produtos de cuidados pessoais e cosméticos, com a qualidade que você merece.
 
-    Button(janela_crud, text="Adicionar Produto", command=adicionar_produto).pack(pady=5)
-    Button(janela_crud, text="Editar Produto", command=editar_produto).pack(pady=5)
-    Button(janela_crud, text="Excluir Produto", command=excluir_produto).pack(pady=5)
-    Button(janela_crud, text="Exibir Produtos", command=abrir_janela_exibir_produtos).pack(pady=5)
+    Nossa missão é proporcionar um atendimento ágil, confiável e humanizado, com profissionais
+    capacitados para orientações e aconselhamentos sobre os produtos que oferecemos. Trabalhamos
+    com as melhores marcas do mercado, garantindo que você tenha acesso aos produtos mais eficazes
+    para sua saúde e qualidade de vida.
+
+    Na Drogaria Senai, nossa prioridade é o cuidado com você e sua família. Além de um ambiente
+    seguro e confortável, buscamos sempre estar atualizados com as necessidades de nossos clientes,
+    oferecendo soluções que atendam aos mais diversos requisitos.
+
+    Acreditamos que o acesso à saúde de qualidade deve ser fácil e próximo, e é por isso que estamos
+    sempre prontos para proporcionar uma experiência de compra eficiente e de confiança.
+
+    Drogaria Senai - Cuidando de você com responsabilidade e carinho.
+    """
+
+    # Adicionando o texto na janela
+    Label(janela_sobre_nos, text=texto_sobre_nos, justify="left", padx=10, pady=10).pack(expand=True, fill="both")
+    Label(janela_sobre_nos, text="Desenvolvido por: João Santos, Lucas Bernardo e Ramon Benites.").pack(pady=15)
 
