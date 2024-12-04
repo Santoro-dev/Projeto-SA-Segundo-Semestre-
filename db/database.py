@@ -1,3 +1,4 @@
+#ComentarioSergio 2
 import mysql.connector
 
 # Configurações do banco de dados
