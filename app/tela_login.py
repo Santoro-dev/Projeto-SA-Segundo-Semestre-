@@ -28,11 +28,35 @@ def voltar_tela_login():
 def realizar_registro():
     usuario = entry_usuario_registro.get()
     senha = entry_senha_registro.get()
-    if usuario and senha:
+
+    # Verificar se os campos estão preenchidos
+    if not usuario or not senha:
+        messagebox.showerror("Erro", "Por favor, preencha todos os campos.")
+        return
+
+    try:
+        # Conexão com o banco de dados
+        conn = conectar()
+        cursor = conn.cursor()
+        
+        # Query SQL para inserir os dados
+        query = "INSERT INTO usuarios (nome, senha) VALUES (%s, %s)"
+        cursor.execute(query, (usuario, senha))
+        
+        # Confirmar as alterações no banco
+        conn.commit()
+
+        # Fechar conexão
+        cursor.close()
+        conn.close()
+
+        # Exibir mensagem de sucesso
         messagebox.showinfo("Sucesso", f"Usuário {usuario} registrado com sucesso!")
         voltar_tela_login()
-    else:
-        messagebox.showerror("Erro", "Por favor, preencha todos os campos.")
+    
+    except Exception as e:
+        # Exibir mensagem de erro em caso de falha
+        messagebox.showerror("Erro", f"Erro ao registrar o usuário: {e}")
 
 # Função para criar a tela de login
 def criar_tela_login():
@@ -41,6 +65,8 @@ def criar_tela_login():
     janela_login = Tk()
     janela_login.title("Login")
     janela_login.geometry("400x200")
+    janela_login.resizable(width=False, height=False)
+
 
     Label(janela_login, text="Usuário:").pack()
     entry_usuario = Entry(janela_login)
@@ -64,6 +90,8 @@ def criar_tela_registro():
     janela_registro = Tk()
     janela_registro.title("Criar Conta")
     janela_registro.geometry("400x250")
+    janela_registro.resizable(width=False, height=False)
+
 
     Label(janela_registro, text="Escolha um Usuário:").pack(pady=10)
     entry_usuario_registro = Entry(janela_registro)

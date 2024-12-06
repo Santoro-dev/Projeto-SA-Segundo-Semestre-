@@ -7,6 +7,8 @@ def abrir_janela_principal():
 
     janela_principal.title("Tela Principal")
     janela_principal.geometry("600x400")
+    janela_principal.resizable(width=False, height=False)
+
 
     # Exemplo de conteúdo na janela principal
     Label(janela_principal, text="Drogaria Senai").pack(pady=20)

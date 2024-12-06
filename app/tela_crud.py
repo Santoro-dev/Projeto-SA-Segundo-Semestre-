@@ -39,6 +39,9 @@ def abrir_janela_exibir_produtos():
     janela_exibir = Toplevel()
     janela_exibir.title("Produtos")
     janela_exibir.geometry("800x600")
+    janela_exibir.resizable(width=False, height=False)
+
+
 
     Label(janela_exibir, text="Buscar Produto:").pack(pady=5)
     entry_busca = Entry(janela_exibir)
@@ -123,6 +126,9 @@ def adicionar_produto():
     janela_adicionar_produto = Tk()
     janela_adicionar_produto.title("Adicionar Produto")
     janela_adicionar_produto.geometry("400x500")
+    janela_adicionar_produto.resizable(width=False, height=False)
+
+
 
     Label(janela_adicionar_produto, text="Nome do Produto:").pack(pady=5)
     entry_nome = Entry(janela_adicionar_produto)
@@ -181,6 +187,9 @@ def editar_produto():
     janela_editar_produto = Tk()
     janela_editar_produto.title("Editar Produto")
     janela_editar_produto.geometry("400x500")
+    janela_editar_produto.resizable(width=False, height=False)
+
+
 
     Label(janela_editar_produto, text="ID do Produto:").pack(pady=5)
     entry_id = Entry(janela_editar_produto)
@@ -235,6 +244,8 @@ def excluir_produto():
     janela_excluir_produto = Tk()
     janela_excluir_produto.title("Excluir Produto")
     janela_excluir_produto.geometry("400x200")
+    janela_excluir_produto.resizable(width=False, height=False)
+
 
     Label(janela_excluir_produto, text="ID do Produto:").pack(pady=5)
     entry_id = Entry(janela_excluir_produto)
@@ -247,6 +258,8 @@ def exibir_sobre_nos():
     janela_sobre_nos = Toplevel()
     janela_sobre_nos.title("Sobre Nós - Drogaria Senai")
     janela_sobre_nos.geometry("600x400")
+    janela_sobre_nos.resizable(width=False, height=False)
+
 
     texto_sobre_nos = """
     A Drogaria Senai é uma farmácia comprometida com a saúde e bem-estar de seus clientes.
