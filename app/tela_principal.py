@@ -1,5 +1,5 @@
 from tkinter import Tk, Label, Button, Toplevel
-from app.tela_crud import abrir_janela_exibir_produtos, exibir_sobre_nos
+from app.tela_crud import abrir_janela_exibir_produtos, exibir_sobre_nos, abrir_janela_exibir_fornecedores
 
 
 def abrir_janela_principal():
@@ -13,6 +13,7 @@ def abrir_janela_principal():
     # Exemplo de conteúdo na janela principal
     Label(janela_principal, text="Drogaria Senai").pack(pady=20)
     Button(janela_principal, text="Produtos", command=abrir_janela_exibir_produtos).pack(pady=10)
+    Button(janela_principal, text="Fornecedores", command=abrir_janela_exibir_fornecedores).pack(pady=10)
     Button(janela_principal, text="Sobre nós", command=exibir_sobre_nos).pack(pady=15)
     Button(janela_principal, text="Sair", command=janela_principal.destroy).pack(pady=20)
 

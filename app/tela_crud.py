@@ -1,4 +1,4 @@
-from tkinter import Tk, Toplevel, Label, Button, Entry, messagebox, ttk, Scrollbar
+from tkinter import Tk, Toplevel, Label, Button, Entry, messagebox, ttk, Scrollbar, StringVar
 from db.database import conectar
 
 def buscar_produtos(filtro=""):
@@ -92,6 +92,162 @@ def abrir_janela_exibir_produtos():
 
     exibir_produtos(tree)
 
+def buscar_fornecedores(filtro=""):
+    try:
+        conn = conectar()
+        cursor = conn.cursor()
+        query = """
+            SELECT f.id_fornecedor, f.nome, f.endereco, f.telefone
+            FROM fornecedores f
+        """
+        if filtro:
+            query += " WHERE f.nome LIKE %s OR f.endereco LIKE %s OR f.telefone LIKE %s"
+            filtro = f"%{filtro}%"
+            cursor.execute(query, (filtro, filtro, filtro))
+        else:
+            cursor.execute(query)
+
+        resultados = cursor.fetchall()
+        conn.close()
+        return resultados
+    except Exception as e:
+        messagebox.showerror("Erro", f"Erro ao buscar fornecedores: {e}")
+        return []
+
+
+def exibir_fornecedores(tree, filtro=""):
+    for item in tree.get_children():
+        tree.delete(item)
+
+    fornecedores = buscar_fornecedores(filtro)
+
+    for fornecedor in fornecedores:
+        tree.insert("", "end", values=fornecedor)
+
+
+def abrir_janela_exibir_fornecedores():
+    janela_exibir = Toplevel()
+    janela_exibir.title("Fornecedores")
+    janela_exibir.geometry("800x600")
+    janela_exibir.resizable(width=False, height=False)
+
+    Label(janela_exibir, text="Buscar Fornecedor:").pack(pady=5)
+    entry_busca = Entry(janela_exibir)
+    entry_busca.pack(pady=5)
+
+    def realizar_busca():
+        filtro = entry_busca.get()
+        exibir_fornecedores(tree, filtro)
+
+    Button(janela_exibir, text="Buscar", command=realizar_busca).pack(pady=5)
+    Button(janela_exibir, text="Adicionar Fornecedor", command=adicionar_fornecedor).pack(pady=5)
+    Button(janela_exibir, text="Excluir Fornecedor", command=lambda: excluir_fornecedor(tree)).pack(pady=10)
+
+    frame_tabela = ttk.Frame(janela_exibir)
+    frame_tabela.pack(expand=True, fill="both")
+
+    colunas = ("ID", "Nome", "Endereço", "Telefone")
+    tree = ttk.Treeview(frame_tabela, columns=colunas, show="headings", selectmode="browse")
+
+    # Configurando cabeçalhos e largura das colunas
+    tree.heading("ID", text="ID")
+    tree.heading("Nome", text="Nome")
+    tree.heading("Endereço", text="Endereço")
+    tree.heading("Telefone", text="Telefone")
+
+    tree.column("ID", width=50, anchor="center")
+    tree.column("Nome", width=150, anchor="w")
+    tree.column("Endereço", width=200, anchor="w")
+    tree.column("Telefone", width=100, anchor="center")
+
+    tree.pack(side="left", expand=True, fill="both")
+
+    # Adicionando barras de rolagem
+    scroll_y = Scrollbar(frame_tabela, orient="vertical", command=tree.yview)
+    scroll_y.pack(side="right", fill="y")
+    tree.configure(yscrollcommand=scroll_y.set)
+
+    scroll_x = Scrollbar(janela_exibir, orient="horizontal", command=tree.xview)
+    scroll_x.pack(side="bottom", fill="x")
+    tree.configure(xscrollcommand=scroll_x.set)
+
+    exibir_fornecedores(tree)
+
+
+def adicionar_fornecedor():
+    def salvar_fornecedor():
+        nome = entry_nome.get()
+        endereco = entry_endereco.get()
+        telefone = entry_telefone.get()
+
+        # Validando se os campos obrigatórios foram preenchidos
+        if not nome or not endereco or not telefone:
+            messagebox.showerror("Erro", "Por favor, preencha todos os campos.")
+            return
+
+        try:
+            # Conectar ao banco de dados
+            conn = conectar()
+            cursor = conn.cursor()
+            cursor.execute("""
+                INSERT INTO fornecedores (nome, endereco, telefone)
+                VALUES (%s, %s, %s)
+            """, (nome, endereco, telefone))
+            conn.commit()
+            conn.close()
+
+            messagebox.showinfo("Sucesso", "Fornecedor adicionado com sucesso!")
+            janela_adicionar_fornecedor.destroy()
+            abrir_janela_exibir_fornecedores()  # Atualiza a lista de fornecedores
+        except Exception as e:
+            messagebox.showerror("Erro", f"Erro ao adicionar fornecedor: {e}")
+
+    janela_adicionar_fornecedor = Toplevel()
+    janela_adicionar_fornecedor.title("Adicionar Fornecedor")
+    janela_adicionar_fornecedor.geometry("400x300")
+
+    Label(janela_adicionar_fornecedor, text="Nome").pack(pady=5)
+    entry_nome = Entry(janela_adicionar_fornecedor)
+    entry_nome.pack(pady=5)
+
+    Label(janela_adicionar_fornecedor, text="Endereço").pack(pady=5)
+    entry_endereco = Entry(janela_adicionar_fornecedor)
+    entry_endereco.pack(pady=5)
+
+    Label(janela_adicionar_fornecedor, text="Telefone").pack(pady=5)
+    entry_telefone = Entry(janela_adicionar_fornecedor)
+    entry_telefone.pack(pady=5)
+
+    Button(janela_adicionar_fornecedor, text="Salvar", command=salvar_fornecedor).pack(pady=15)
+
+
+def excluir_fornecedor(tree):
+    try:
+        # Verifica se algum fornecedor foi selecionado
+        selected_item = tree.selection()
+        if not selected_item:
+            messagebox.showwarning("Aviso", "Selecione um fornecedor para excluir.")
+            return
+
+        fornecedor_id = tree.item(selected_item)['values'][0]
+
+        # Confirmar exclusão
+        confirmacao = messagebox.askyesno("Confirmar Exclusão", f"Você tem certeza que deseja excluir o fornecedor com ID {fornecedor_id}?")
+        if confirmacao:
+            # Conectar ao banco de dados
+            conn = conectar()
+            cursor = conn.cursor()
+            cursor.execute("""
+                DELETE FROM fornecedores WHERE id_fornecedor = %s
+            """, (fornecedor_id,))
+            conn.commit()
+            conn.close()
+
+            messagebox.showinfo("Sucesso", "Fornecedor excluído com sucesso!")
+            exibir_fornecedores(tree)  # Atualiza a lista de fornecedores
+    except Exception as e:
+        messagebox.showerror("Erro", f"Erro ao excluir fornecedor: {e}")
+
 # Função para adicionar produto
 def adicionar_produto():
     def salvar_produto():
@@ -100,36 +256,49 @@ def adicionar_produto():
         categoria = entry_categoria.get()
         quantidade = entry_quantidade.get()
         preco = entry_preco.get()
+        fornecedor_nome = combobox_fornecedor.get()  # Obtém o nome do fornecedor selecionado
 
-        # Validando se todos os campos foram preenchidos
-        if not nome or not codigo_barras or not quantidade or not preco:
+        # Validando se os campos obrigatórios foram preenchidos
+        if not nome or not codigo_barras or not quantidade or not preco or not fornecedor_nome.strip():
             messagebox.showerror("Erro", "Por favor, preencha todos os campos.")
             return
-        
+
         try:
             # Conectar ao banco de dados
             conn = conectar()
             cursor = conn.cursor()
+
+            # Buscar o ID do fornecedor pelo nome
             cursor.execute("""
-                INSERT INTO produtos (nome, codigo_barras, categoria, quantidade, preco)
-                VALUES (%s, %s, %s, %s, %s)
-            """, (nome, codigo_barras, categoria, quantidade, preco))
+                SELECT id_fornecedor FROM fornecedores WHERE nome = %s
+            """, (fornecedor_nome,))
+            fornecedor_id = cursor.fetchone()
+
+            if fornecedor_id is None:
+                messagebox.showerror("Erro", f"Fornecedor '{fornecedor_nome}' não encontrado no banco.")
+                return
+            else:
+                fornecedor_id = fornecedor_id[0]  # Recupera o ID do fornecedor
+
+            # Adicionar o produto com o ID do fornecedor
+            cursor.execute("""
+                INSERT INTO produtos (nome, codigo_barras, categoria, quantidade, preco, fornecedor_id)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """, (nome, codigo_barras, categoria, quantidade, preco, fornecedor_id))
             conn.commit()
             conn.close()
 
-            messagebox.showinfo("Sucesso", "Produto adicionado com sucesso!")
+            messagebox.showinfo("Sucesso", f"Produto adicionado com o fornecedor '{fornecedor_nome}' (ID {fornecedor_id})!")
             janela_adicionar_produto.destroy()
         except Exception as e:
             messagebox.showerror("Erro", f"Erro ao adicionar produto: {e}")
 
     # Criando a janela de adicionar produto
-    janela_adicionar_produto = Tk()
+    janela_adicionar_produto = Toplevel()
     janela_adicionar_produto.title("Adicionar Produto")
     janela_adicionar_produto.geometry("400x500")
-    janela_adicionar_produto.resizable(width=False, height=False)
 
-
-
+    # Widgets de entrada de dados
     Label(janela_adicionar_produto, text="Nome do Produto:").pack(pady=5)
     entry_nome = Entry(janela_adicionar_produto)
     entry_nome.pack(pady=5)
@@ -150,7 +319,30 @@ def adicionar_produto():
     entry_preco = Entry(janela_adicionar_produto)
     entry_preco.pack(pady=5)
 
-    Button(janela_adicionar_produto, text="Salvar Produto", command=salvar_produto).pack(pady=10)
+    # Combobox para selecionar o fornecedor
+    Label(janela_adicionar_produto, text="Fornecedor:").pack(pady=5)
+    combobox_fornecedor = ttk.Combobox(janela_adicionar_produto)
+    combobox_fornecedor.pack(pady=5)
+
+    # Preencher o Combobox com os fornecedores do banco
+    try:
+        conn = conectar()
+        cursor = conn.cursor()
+        cursor.execute("SELECT nome FROM fornecedores")
+        fornecedores = cursor.fetchall()
+        conn.close()
+
+        # Adicionar os fornecedores no Combobox
+        fornecedor_nomes = [fornecedor[0] for fornecedor in fornecedores]
+        combobox_fornecedor['values'] = fornecedor_nomes
+        if fornecedor_nomes:
+            combobox_fornecedor.set(fornecedor_nomes[0])  # Define o primeiro fornecedor como padrão
+    except Exception as e:
+        messagebox.showerror("Erro", f"Erro ao carregar fornecedores: {e}")
+
+    # Botão para salvar o produto
+    Button(janela_adicionar_produto, text="Salvar Produto", command=salvar_produto).pack(pady=15)
+    janela_adicionar_produto.mainloop()
 
 # Função para editar produto
 def editar_produto():
