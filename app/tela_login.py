@@ -66,13 +66,14 @@ def criar_tela_login():
     janela_login.title("Login")
     janela_login.geometry("400x200")
     janela_login.resizable(width=False, height=False)
+    janela_login.configure(bg="lightblue")
 
 
-    Label(janela_login, text="Usuário:").pack()
+    Label(janela_login, text="Usuário:", bg="lightblue").pack()
     entry_usuario = Entry(janela_login)
     entry_usuario.pack()
 
-    Label(janela_login, text="Senha:").pack()
+    Label(janela_login, text="Senha:", bg="lightblue").pack()
     entry_senha = Entry(janela_login, show="*")
     entry_senha.pack()
 

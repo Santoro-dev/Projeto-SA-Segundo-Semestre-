@@ -205,20 +205,21 @@ def adicionar_fornecedor():
     janela_adicionar_fornecedor = Toplevel()
     janela_adicionar_fornecedor.title("Adicionar Fornecedor")
     janela_adicionar_fornecedor.geometry("400x300")
+    janela_adicionar_fornecedor.configure(bg="lightblue")
 
-    Label(janela_adicionar_fornecedor, text="Nome").pack(pady=5)
+    Label(janela_adicionar_fornecedor, text="Nome", bg="lightblue").pack(pady=5)
     entry_nome = Entry(janela_adicionar_fornecedor)
     entry_nome.pack(pady=5)
 
-    Label(janela_adicionar_fornecedor, text="Endereço").pack(pady=5)
+    Label(janela_adicionar_fornecedor, text="Endereço", bg="lightblue").pack(pady=5)
     entry_endereco = Entry(janela_adicionar_fornecedor)
     entry_endereco.pack(pady=5)
 
-    Label(janela_adicionar_fornecedor, text="Telefone").pack(pady=5)
+    Label(janela_adicionar_fornecedor, text="Telefone", bg="lightblue").pack(pady=5)
     entry_telefone = Entry(janela_adicionar_fornecedor)
     entry_telefone.pack(pady=5)
 
-    Button(janela_adicionar_fornecedor, text="Salvar", command=salvar_fornecedor).pack(pady=15)
+    Button(janela_adicionar_fornecedor, text="Salvar", bg="lightblue", command=salvar_fornecedor).pack(pady=15)
 
 
 def excluir_fornecedor(tree):
@@ -382,34 +383,35 @@ def editar_produto():
     janela_editar_produto.title("Editar Produto")
     janela_editar_produto.geometry("400x500")
     janela_editar_produto.resizable(width=False, height=False)
+    janela_editar_produto.configure(bg="lightblue")
 
 
 
-    Label(janela_editar_produto, text="ID do Produto:").pack(pady=5)
+    Label(janela_editar_produto, text="ID do Produto:", bg="lightblue").pack(pady=5)
     entry_id = Entry(janela_editar_produto)
     entry_id.pack(pady=5)
 
-    Label(janela_editar_produto, text="Nome do Produto:").pack(pady=5)
+    Label(janela_editar_produto, text="Nome do Produto:", bg="lightblue").pack(pady=5)
     entry_nome = Entry(janela_editar_produto)
     entry_nome.pack(pady=5)
 
-    Label(janela_editar_produto, text="Código de Barras:").pack(pady=5)
+    Label(janela_editar_produto, text="Código de Barras:", bg="lightblue").pack(pady=5)
     entry_codigo_barras = Entry(janela_editar_produto)
     entry_codigo_barras.pack(pady=5)
 
-    Label(janela_editar_produto, text="Categoria:").pack(pady=5)
+    Label(janela_editar_produto, text="Categoria:", bg="lightblue").pack(pady=5)
     entry_categoria = Entry(janela_editar_produto)
     entry_categoria.pack(pady=5)
 
-    Label(janela_editar_produto, text="Quantidade:").pack(pady=5)
+    Label(janela_editar_produto, text="Quantidade:", bg="lightblue").pack(pady=5)
     entry_quantidade = Entry(janela_editar_produto)
     entry_quantidade.pack(pady=5)
 
-    Label(janela_editar_produto, text="Preço:").pack(pady=5)
+    Label(janela_editar_produto, text="Preço:", bg="lightblue").pack(pady=5)
     entry_preco = Entry(janela_editar_produto)
     entry_preco.pack(pady=5)
 
-    Button(janela_editar_produto, text="Salvar Edição", command=salvar_edicao).pack(pady=10)
+    Button(janela_editar_produto, text="Salvar Edição", bg="lightblue", command=salvar_edicao).pack(pady=10)
 
 # Função para excluir produto
 def excluir_produto():
@@ -439,14 +441,10 @@ def excluir_produto():
     janela_excluir_produto.title("Excluir Produto")
     janela_excluir_produto.geometry("400x200")
     janela_excluir_produto.resizable(width=False, height=False)
+    janela_excluir_produto.configure(bg="lightblue")
 
     # Alterar a cor de fundo da janela
-    Label(janela_excluir_produto, text="ID do Produto:").pack(pady=5)
-    entry_id = Entry(janela_excluir_produto)
-    entry_id.pack(pady=5)
-
-
-    Label(janela_excluir_produto, text="ID do Produto:").pack(pady=5)
+    Label(janela_excluir_produto, text="ID do Produto:", bg="lightblue").pack(pady=5)
     entry_id = Entry(janela_excluir_produto)
     entry_id.pack(pady=5)
 
