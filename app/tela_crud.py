@@ -298,29 +298,31 @@ def adicionar_produto():
     janela_adicionar_produto.title("Adicionar Produto")
     janela_adicionar_produto.geometry("400x500")
 
+    # Alterar a cor de fundo da janela
+    janela_adicionar_produto.configure(bg="lightblue")
+
     # Widgets de entrada de dados
-    Label(janela_adicionar_produto, text="Nome do Produto:").pack(pady=5)
+    Label(janela_adicionar_produto, text="Nome do Produto:",bg="lightblue").pack(pady=5)
     entry_nome = Entry(janela_adicionar_produto)
     entry_nome.pack(pady=5)
-
-    Label(janela_adicionar_produto, text="Código de Barras:").pack(pady=5)
+    Label(janela_adicionar_produto, text="Código de Barras:",bg="lightblue").pack(pady=5)
     entry_codigo_barras = Entry(janela_adicionar_produto)
     entry_codigo_barras.pack(pady=5)
 
-    Label(janela_adicionar_produto, text="Categoria:").pack(pady=5)
+    Label(janela_adicionar_produto, text="Categoria:",bg="lightblue").pack(pady=5)
     entry_categoria = Entry(janela_adicionar_produto)
     entry_categoria.pack(pady=5)
 
-    Label(janela_adicionar_produto, text="Quantidade:").pack(pady=5)
+    Label(janela_adicionar_produto, text="Quantidade:", bg="lightblue").pack(pady=5)
     entry_quantidade = Entry(janela_adicionar_produto)
     entry_quantidade.pack(pady=5)
 
-    Label(janela_adicionar_produto, text="Preço:").pack(pady=5)
+    Label(janela_adicionar_produto, text="Preço:", bg="lightblue").pack(pady=5)
     entry_preco = Entry(janela_adicionar_produto)
     entry_preco.pack(pady=5)
 
     # Combobox para selecionar o fornecedor
-    Label(janela_adicionar_produto, text="Fornecedor:").pack(pady=5)
+    Label(janela_adicionar_produto, text="Fornecedor:", bg="lightblue").pack(pady=5)
     combobox_fornecedor = ttk.Combobox(janela_adicionar_produto)
     combobox_fornecedor.pack(pady=5)
 
@@ -438,6 +440,11 @@ def excluir_produto():
     janela_excluir_produto.geometry("400x200")
     janela_excluir_produto.resizable(width=False, height=False)
 
+    # Alterar a cor de fundo da janela
+    Label(janela_excluir_produto, text="ID do Produto:").pack(pady=5)
+    entry_id = Entry(janela_excluir_produto)
+    entry_id.pack(pady=5)
+
 
     Label(janela_excluir_produto, text="ID do Produto:").pack(pady=5)
     entry_id = Entry(janela_excluir_produto)
@@ -452,6 +459,8 @@ def exibir_sobre_nos():
     janela_sobre_nos.geometry("600x400")
     janela_sobre_nos.resizable(width=False, height=False)
 
+    #Mudando a cor de fundo da janela
+    janela_sobre_nos.configure(bg="lightgray")
 
     texto_sobre_nos = """
     A Drogaria Senai é uma farmácia comprometida com a saúde e bem-estar de seus clientes.
@@ -472,8 +481,22 @@ def exibir_sobre_nos():
 
     Drogaria Senai - Cuidando de você com responsabilidade e carinho.
     """
-
+    Label(
+        janela_sobre_nos,
+        text=texto_sobre_nos,
+        justify="left",
+        padx=10,
+        pady=10,
+        bg="lightgray",
+        fg="black",
+        font=("Arial", 10)
+    ).pack(expand=True, fill="both")
     # Adicionando o texto na janela
-    Label(janela_sobre_nos, text=texto_sobre_nos, justify="left", padx=10, pady=10).pack(expand=True, fill="both")
-    Label(janela_sobre_nos, text="Desenvolvido por: João Santos, Lucas Bernardo e Ramon Benites.").pack(pady=15)
+    Label(
+        janela_sobre_nos,
+        text="Desenvolvido por: João Santos, Lucas Bernardo e Ramon Benites.",
+        bg="lightgray",
+        fg="blue",
+        font=("Arial", 10, "italic")
+    ).pack(pady=15)
 
