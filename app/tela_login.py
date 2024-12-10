@@ -78,7 +78,7 @@ def criar_tela_login():
 
     # Carregar a imagem e manter a referência para evitar garbage collector
     try:
-        img = PhotoImage(file="C:/Users/Usuario/projeto sa/Projeto-SA-Segundo-Semestre-/icons/Icon_logoSa.png")
+        img = PhotoImage(file="C:/Users/Usuario/projeto sa/Projeto-SA-Segundo-Semestre-/icons/SA_1.png")
         label_img = Label(janela_login, image=img, bg="lightblue")
         label_img.image = img  # Referência para evitar GC
         label_img.pack(pady=20)
