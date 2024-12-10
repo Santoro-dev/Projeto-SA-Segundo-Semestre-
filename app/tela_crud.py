@@ -1,5 +1,6 @@
 from tkinter import Tk, Toplevel, Label, Button, Entry, messagebox, ttk, Scrollbar, StringVar
 from db.database import conectar
+from PIL import Image, ImageTk
 
 def buscar_produtos(filtro=""):
     try:
@@ -40,6 +41,8 @@ def abrir_janela_exibir_produtos():
     janela_exibir.title("Produtos")
     janela_exibir.geometry("800x600")
     janela_exibir.resizable(width=False, height=False)
+
+    janela_exibir.iconbitmap("./icons/favicon.ico")
 
 
 
@@ -131,6 +134,8 @@ def abrir_janela_exibir_fornecedores():
     janela_exibir.geometry("800x600")
     janela_exibir.resizable(width=False, height=False)
 
+    janela_exibir.iconbitmap("./icons/favicon.ico")
+
     Label(janela_exibir, text="Buscar Fornecedor:").pack(pady=5)
     entry_busca = Entry(janela_exibir)
     entry_busca.pack(pady=5)
@@ -206,6 +211,8 @@ def adicionar_fornecedor():
     janela_adicionar_fornecedor.title("Adicionar Fornecedor")
     janela_adicionar_fornecedor.geometry("400x300")
     janela_adicionar_fornecedor.configure(bg="lightblue")
+
+    janela_adicionar_fornecedor.iconbitmap("./icons/favicon.ico")
 
     Label(janela_adicionar_fornecedor, text="Nome", bg="lightblue").pack(pady=5)
     entry_nome = Entry(janela_adicionar_fornecedor)
@@ -299,6 +306,8 @@ def adicionar_produto():
     janela_adicionar_produto.title("Adicionar Produto")
     janela_adicionar_produto.geometry("400x500")
 
+    janela_adicionar_produto.iconbitmap("./icons/favicon.ico")
+
     # Alterar a cor de fundo da janela
     janela_adicionar_produto.configure(bg="lightblue")
 
@@ -385,6 +394,8 @@ def editar_produto():
     janela_editar_produto.resizable(width=False, height=False)
     janela_editar_produto.configure(bg="lightblue")
 
+    janela_editar_produto.iconbitmap("./icons/favicon.ico")
+
 
 
     Label(janela_editar_produto, text="ID do Produto:", bg="lightblue").pack(pady=5)
@@ -443,6 +454,8 @@ def excluir_produto():
     janela_excluir_produto.resizable(width=False, height=False)
     janela_excluir_produto.configure(bg="lightblue")
 
+    janela_excluir_produto.iconbitmap("./icons/favicon.ico")
+
     # Alterar a cor de fundo da janela
     Label(janela_excluir_produto, text="ID do Produto:", bg="lightblue").pack(pady=5)
     entry_id = Entry(janela_excluir_produto)
@@ -457,8 +470,7 @@ def exibir_sobre_nos():
     janela_sobre_nos.geometry("600x400")
     janela_sobre_nos.resizable(width=False, height=False)
 
-    #Mudando a cor de fundo da janela
-    janela_sobre_nos.configure(bg="lightgray")
+    janela_sobre_nos.iconbitmap("./icons/favicon.ico")
 
     texto_sobre_nos = """
     A Drogaria Senai é uma farmácia comprometida com a saúde e bem-estar de seus clientes.
@@ -479,17 +491,21 @@ def exibir_sobre_nos():
 
     Drogaria Senai - Cuidando de você com responsabilidade e carinho.
     """
-    Label(
+    
+    # Criar uma label para o texto
+    label_texto = Label(
         janela_sobre_nos,
         text=texto_sobre_nos,
         justify="left",
         padx=10,
         pady=10,
-        bg="lightgray",
-        fg="black",
+        bg="lightgray",  # Definir a cor de fundo do texto
+        fg="black",  # Cor do texto
         font=("Arial", 10)
-    ).pack(expand=True, fill="both")
-    # Adicionando o texto na janela
+    )
+    label_texto.pack(expand=True, fill="both")
+
+    # Adicionar créditos sobre os desenvolvedores
     Label(
         janela_sobre_nos,
         text="Desenvolvido por: João Santos, Lucas Bernardo e Ramon Benites.",

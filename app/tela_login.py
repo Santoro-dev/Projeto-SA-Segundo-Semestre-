@@ -1,6 +1,8 @@
 from tkinter import Tk, Label, Entry, Button, messagebox
 from db.database import conectar
 from app.tela_principal import abrir_janela_principal  # Importa a função da janela principal
+from tkinter import PhotoImage
+from PIL import Image, ImageTk
 
 # Função para realizar o login
 def realizar_login():
@@ -64,11 +66,26 @@ def criar_tela_login():
 
     janela_login = Tk()
     janela_login.title("Login")
-    janela_login.geometry("400x200")
+    janela_login.geometry("400x350")
     janela_login.resizable(width=False, height=False)
     janela_login.configure(bg="lightblue")
 
+    # Configuração do ícone
+    try:
+        janela_login.iconbitmap("./icons/favicon.ico")
+    except Exception as e:
+        print(f"Erro ao carregar o ícone: {e}")
 
+    # Carregar a imagem e manter a referência para evitar garbage collector
+    try:
+        img = PhotoImage(file="C:/Users/Usuario/projeto sa/Projeto-SA-Segundo-Semestre-/icons/Icon_logoSa.png")
+        label_img = Label(janela_login, image=img, bg="lightblue")
+        label_img.image = img  # Referência para evitar GC
+        label_img.pack(pady=20)
+    except Exception as e:
+        print(f"Erro ao carregar a imagem: {e}")
+
+    # Campos de login
     Label(janela_login, text="Usuário:", bg="lightblue").pack()
     entry_usuario = Entry(janela_login)
     entry_usuario.pack()
@@ -77,9 +94,8 @@ def criar_tela_login():
     entry_senha = Entry(janela_login, show="*")
     entry_senha.pack()
 
+    # Botões
     Button(janela_login, text="Login", command=realizar_login).pack(pady=10)
-    
-    # Botão para abrir a tela de registro
     Button(janela_login, text="Criar Conta", command=abrir_janela_registro).pack(pady=5)
 
     return janela_login
@@ -93,7 +109,10 @@ def criar_tela_registro():
     janela_registro.geometry("400x250")
     janela_registro.resizable(width=False, height=False)
 
+    # Alterar para usar iconbitmap
+    janela_registro.iconbitmap("C:/Users/Usuario/projeto sa/Projeto-SA-Segundo-Semestre-/icons/favicon.ico")
 
+    # Campos e botões
     Label(janela_registro, text="Escolha um Usuário:").pack(pady=10)
     entry_usuario_registro = Entry(janela_registro)
     entry_usuario_registro.pack(pady=5)
@@ -103,7 +122,7 @@ def criar_tela_registro():
     entry_senha_registro.pack(pady=5)
 
     Button(janela_registro, text="Registrar", command=realizar_registro).pack(pady=10)
-    
+
     # Botão para voltar para a tela de login
     Button(janela_registro, text="Já tenho uma conta", command=voltar_tela_login).pack(pady=5)
 

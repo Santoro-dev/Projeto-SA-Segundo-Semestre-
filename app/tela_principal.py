@@ -9,6 +9,8 @@ def abrir_janela_principal():
     janela_principal.geometry("600x400")
     janela_principal.resizable(width=False, height=False)
 
+    janela_principal.iconbitmap("./icons/favicon.ico")
+
     #Mudando a cor de fundo da janela
     janela_principal.configure(bg="lightblue")
     
